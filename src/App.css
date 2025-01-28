@@ -5,7 +5,15 @@
   --transparent-white: rgba(255, 255, 255, 0.5);
   --primary-color: #121212;
 }
-
+body {
+  /* display: flex; */
+  height: 100vh;
+  background-image: url('Assets/bg-body.png');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: scroll;
+}
 * {
   font-family: "Nunito", sans-serif; /* Use only Nunito font */
   margin: 0;
@@ -43,6 +51,9 @@
   text-decoration: none;
   color: white;
   padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .sidebar a:hover {
@@ -71,7 +82,7 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
+  padding: 10px 20px !important;
 }
 
 .navbar h1 {
@@ -90,32 +101,25 @@
   cursor: pointer;
 }
 
-/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
-  right: 20px;
-  top: 60px;
-  background-color: #2c3e50;
-  color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  right: 15px;
+  top: 45px;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
-}
-
-.dropdown-item {
-  padding: 10px;
-  text-decoration: none;
-  color: white;
-  display: block;
-}
-
-.dropdown-item:hover {
-  background-color: #34495e;
-  border-radius: 5px;
 }
 
 /* Main content */
@@ -147,6 +151,7 @@
   margin-bottom: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border: 2px solid #ccc; 
+  gap: 20px;
 }
 .filter-container select,
 .filter-container input {
@@ -167,5 +172,298 @@
 /* Table Data Produk */
 #table-data-produk_info{
   color: white;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 3 columns */
+  grid-template-rows: auto; /* Adjust row height automatically */
+  gap: 1rem; /* Add spacing between items */
+}
+
+.mb-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-3 .error-message {
+  color: wheat;
+}
+
+.mb-3 .form-control {
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: white;
+  background-color: rgba(52, 73, 94, 0.6);
+  border: 2px solid #ced4da;
+  border-radius: .25rem;
+}
+
+.mb-3 .form-control::placeholder {
+  color: white;
+  opacity: .4;
+}
+
+.mb-3 .form-control:focus {
+  color: white;
+  background-color: rgba(52, 73, 94, 0.8);
+  border-color: #ced4da;
+  box-shadow: none;
+}
+
+.content .form-grid .mb-3 select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  font-size: 14px;
+  background-color: rgba(52, 73, 94, 0.6);
+  color: white;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+
+
+
+
+/* Analitik */
+.content .content-analitik{
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 130px); /* Adjust based on navbar or other fixed elements */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.content .content-analitik .row-pertama,
+.content .content-analitik .row-kedua,
+.content .content-analitik .row-ketiga,
+.content .content-analitik .row-keempat{
+  display: flex;  
+  margin: 10px;
+  gap: 20px;
+  align-items: center;
+}
+.content .content-analitik .row-pertama .card,
+.content .content-analitik .row-kedua .card,
+.content .content-analitik .row-ketiga .card,
+.content .content-analitik .row-keempat .card {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ccc;
+}
+.content .content-analitik .row-pertama .card{
+  flex: 1;
+  /* height: 100px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  padding: 10px;
+}
+.content .content-analitik .row-pertama .card img{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+.content .content-analitik .row-pertama .card .teks-wrapper-column{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  margin-left: 15px;
+  height: 70px;
+  font-size: 1.2rem;
+}
+.content .content-analitik .row-pertama .card .teks-wrapper-column p{
+  margin-bottom: 0rem;
+}
+.content .content-analitik .row-pertama .card .teks-wrapper-column .card-text{
+  font-weight: bold;
+}
+.content .content-analitik .row-kedua .card,
+.content .content-analitik .row-ketiga .card{
+  height: 250px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.content .content-analitik .row-keempat .card:first-child,
+.content .content-analitik .row-keempat .card:nth-child(2),
+.content .content-analitik .row-keempat .card:nth-child(3)
+{
+  flex: 1;
+  height: 250px;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+/* Grid layout for SweetAlert form */
+.swal2-grid-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  gap: 20px;
+}
+
+.swal2-grid-container .form-group{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.swal2-grid-container .form-group label{
+  white-space: nowrap;
+}
+
+.swal2-grid-container .form-group input[type="text"],
+.swal2-grid-container .form-group input[type="number"],
+.swal2-grid-container .form-group input[type="date"],
+.swal2-grid-container .form-group select{
+  width: 200px;
+  height: 45px;
+  padding: 10px;
+} 
+
+
+.page-item .page-link {
+  /* background-color: #34495e !important; */
+  background-color: rgba(52, 73, 94, 0.6) !important; 
+  border: 2px solid white !important;
+}
+
+.page-item.active .page-link {
+  /* background-color: #34495e !important; */
+  background-color: rgba(255, 255, 255 , 0.6) !important; 
+  border: 2px solid white !important;
+}
+.page-link {
+  color: white !important;
+}
+
+
+table tr td, table tr th{
+  background-color: transparent !important;
+  border: 2px solid white !important;
+  color: white !important;
+}
+
+#table-data-produk td {
+  vertical-align: middle; /* Centers the text vertically */
+  text-align: left; /* Aligns the text to the left horizontally */
+  height: 60px;
+}
+
+  
+#table-data-produk .action-buttons{
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+  gap: 5px;
+}
+
+/* Ensure the action buttons are displayed side by side */
+#table-data-produk_wrapper .pagination{
+  position: relative;
+  left: 1165px;
+}
+
+
+.sidebar a.active-menu {
+  background-color: #34495e;
+  color: white;
+  border-radius: 10px;
+}
+
+.sidebar h1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0px;
+  font-size: 30px;
+}
+
+.sidebar .dashboard-title:hover{
+  background-color: transparent;
+}
+
+
+
+
+
+.card-login {
+  width: 1100px;
+  height: 480px;
+  border-radius: 10px;
+  margin: 100px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  background-size: cover;
+  background-image: url('Assets/cover.jpg');
+  display: flex;
+  flex-direction: row;
+}
+
+.form-login-left {
+  flex: 1;
+  height: 480px;
+  padding-top: 18%;
+  padding-left: 7%;
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  color: #ffc107;
+  font-family: 'Calistoga', cursive;
+}
+
+.form-login-right {
+  flex: 1;
+  padding-top: 40px;
+  padding-left: 75px;
+  box-sizing: border-box;
+}
+
+.input-login {
+  width: 400px;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 4px 8px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.form-group {
+  padding-bottom: 15px;
+}
+
+.img-form-login {
+  height: 80px;
+  width: 80px;
+  margin-left: 120px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.input-login button {
+  width: 100%;
+}
+
+.form-check-label {
+  margin-bottom: 15px;
 }
 
