@@ -6,6 +6,7 @@ import '../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "datatables.net-bs5";
 import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
@@ -93,13 +94,17 @@ const TabelProduk = () => {
 
   const handleEdit = (product) => {
     // Store the current product's ID for future reference
-    const { no, nama_produk, kuantitas, kategori, pengiriman, metode_pembayaran, kurir, kota_pelanggan, provinsi, tanggal_pembelian } = product;
+    const { no, nama_pelanggan, nama_produk, kuantitas, kategori, pengiriman, metode_pembayaran, kurir, kota_pelanggan, provinsi, tanggal_pembelian } = product;
     
     // Open Swal with prefilled product details
     Swal.fire({
       title: 'Edit Product Name',
       html: `
         <div class="swal2-grid-container">
+          <div class="form-group">
+            <label for="pelangganName">Nama Pelanggan:</label>
+            <input type="text" id="pelangganName" value="${nama_pelanggan}" />
+          </div>
           <div class="form-group">
             <label for="productName">Nama Produk:</label>
             <input type="text" id="productName" value="${nama_produk}" />
@@ -162,6 +167,7 @@ const TabelProduk = () => {
       cancelButtonText: 'Cancel',
       preConfirm: async () => {
         // Capture the updated values from the modal
+        const updatedPelangganName = document.getElementById('pelangganName').value;
         const updatedProductName = document.getElementById('productName').value;
         const updatedQuantity = document.getElementById('quantity').value;
         const updatedCategory = document.getElementById('category').value;
@@ -176,6 +182,7 @@ const TabelProduk = () => {
         const { error } = await supabase
           .from('tabel_produk')
           .update({
+            nama_pelanggan: updatedPelangganName,
             nama_produk: updatedProductName,
             kuantitas: updatedQuantity,
             kategori: updatedCategory,
@@ -196,7 +203,7 @@ const TabelProduk = () => {
           setProducts((prevProducts) =>
             prevProducts.map((product) =>
               product.no === no
-                ? { ...product, nama_produk: updatedProductName, kuantitas: updatedQuantity, kategori: updatedCategory, pengiriman: updatedShippingMethod, metode_pembayaran: updatedPaymentMethod, kurir: updatedCourier, kota_pelanggan: updatedCity, provinsi: updatedProvince, tanggal_pembelian: updatedPurchaseDate }
+                ? { ...product, nama_pelanggan: updatedPelangganName, nama_produk: updatedProductName, kuantitas: updatedQuantity, kategori: updatedCategory, pengiriman: updatedShippingMethod, metode_pembayaran: updatedPaymentMethod, kurir: updatedCourier, kota_pelanggan: updatedCity, provinsi: updatedProvince, tanggal_pembelian: updatedPurchaseDate }
                 : product
             )
           );
@@ -220,20 +227,16 @@ const TabelProduk = () => {
         .from('tabel_produk')
         .delete()
         .eq('no', productId);
-      
+  
       if (error) {
         Swal.fire('Error', error.message, 'error');
       } else {
-        Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
-        
-        if (error) {
-          Swal.fire('Error', error.message, 'error');
-        } else {
-          setProducts(data); // This will trigger the table update
-        }
+        await Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+        window.location.reload(); // Ensure the page reloads after the alert
       }
     }
   };
+  
   
     
     
@@ -305,6 +308,7 @@ const TabelProduk = () => {
         <thead>
           <tr>
             <th>No</th>
+            <th>Nama Pelanggan</th>
             <th>Nama Produk</th>
             <th>Kuantitas</th>
             <th>Kategori</th>
@@ -321,6 +325,7 @@ const TabelProduk = () => {
           {products.map((product, index) => (
             <tr key={product.id || index}>
               <td>{index + 1}</td>
+              <td>{product.nama_pelanggan}</td>
               <td>{product.nama_produk}</td>
               <td>{product.kuantitas}</td>
               <td>{product.kategori}</td>
@@ -332,7 +337,7 @@ const TabelProduk = () => {
               <td>{product.tanggal_pembelian}</td>
               <td className="action-buttons">
                 <button className="btn btn-primary" onClick={() => handleEdit(product)}><FontAwesomeIcon icon={faPenToSquare}/></button>
-                <button className="btn btn-danger" onClick={() => handleDelete(product.no, e.target.closest('tr'))}><FontAwesomeIcon icon={faTrashCan}/></button>
+                <button className="btn btn-danger" onClick={() => handleDelete(product.no)}><FontAwesomeIcon icon={faTrashCan}/></button>
               </td>
             </tr>
           ))}

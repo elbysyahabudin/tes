@@ -1,48 +1,29 @@
 import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faWhatsapp, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons';
 
+const Index = () => (
+  <div className="index-container">
+    <div className="index-content">
+      <h1>Selamat datang di toko Wyloz</h1>
+      <p>Toko Olahraga & Fashion Online Terpercaya yang Sudah Melayani Lebih dari 100RB+ Transaksi dari Seluruh Indonesia.</p>
+    </div>
 
-const Index = () => {
-    return(
-        <div className="main-container">
-        {/* Sidebar */}
-        <div className="sidebar">
-          <h2>Wyloz Dashboard</h2>
-          <a href="dataProduk.html"><i className="fa-solid fa-table"></i>Data Produk</a>
-          <a href="analitik.html"><i className="fa-solid fa-chart-line"></i>Analytics</a>
-          <a href="cms.html"><i className="fa-solid fa-bars-progress"></i>CMS</a>
-        </div>
-  
-        {/* Main content */}
-        <div className="main-content">
-          {/* Navbar */}
-          <div className="navbar">
-            <h1><i className="fa-solid fa-bars"></i></h1>
-            <div className="dropdown">
-              <img 
-                src="imgs/wyloz-logo.PNG" 
-                alt="Profile Picture" 
-                className="dropdown-toggle" 
-                id="profileDropdown" 
-                aria-haspopup="true" 
-                aria-expanded="false" 
-              />
-              <div className="dropdown-content" aria-labelledby="profileDropdown">
-                <a className="dropdown-item" href="login.html">
-                  <i style={{ marginRight: '20px' }} className="fa-solid fa-arrow-right-from-bracket"></i>
-                  Logout
-                </a>
-              </div>
-            </div>
-          </div>
-  
-          {/* Main content area */}
-          <div className="content">
-            <h2 style={{ color: 'white', fontWeight: 'bold' }}>Selamat datang di Wyloz</h2>
-            <p style={{ color: 'white' }}>
-              Toko Olahraga & Fashion Online Terpercaya yang Sudah Melayani Lebih dari 100RB+ Transaksi dari Seluruh Indonesia.
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-}
+    <div className="social-media">
+      <a href="https://www.facebook.com/wyloz" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <FontAwesomeIcon icon={faFacebook} />
+      </a>
+      <a href="https://api.whatsapp.com/send?phone=6285774992935&text=Saya%20mau%20pesan%20Kaos%20Wyloz!" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <FontAwesomeIcon icon={faWhatsapp} />
+      </a>
+      <a href="https://www.instagram.com/wyloz.store/" target="_blank" rel="noopener noreferrer" className="social-icon">
+      <FontAwesomeIcon icon={faInstagram} />
+      </a>
+      <a href="https://www.tiktok.com/@wyloz.store" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <FontAwesomeIcon icon={faTiktok} />
+      </a>
+    </div>
+  </div>
+);
+
+export default Index;

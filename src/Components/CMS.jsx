@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import '../App.css';
-
+import Swal from 'sweetalert2';
 // Initialize Supabase client
 const supabaseUrl = "https://trqvushwhkvchkgqhmge.supabase.co"; // Replace with your Supabase URL
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRycXZ1c2h3aGt2Y2hrZ3FobWdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc5MDU1MjUsImV4cCI6MjA1MzQ4MTUyNX0.J-yggfqvHPQtP-Zk-bwOxTRqD64J6jgQ_DOLCCp-JxY"; // Replace with your Supabase API Key
@@ -22,6 +22,7 @@ const provinces = [
 
 const ProductForm = () => {
   const [formData, setFormData] = useState({
+    nama_pelanggan: "",
     nama_produk: "",
     harga: "",
     kategori: "",
@@ -47,6 +48,7 @@ const ProductForm = () => {
     e.preventDefault();
 
     const newErrors = {};
+    if (!formData.nama_pelanggan) newErrors.nama_pelanggan = "Nama pelanggan harus diisi";
     if (!formData.nama_produk) newErrors.nama_produk = "Nama produk harus diisi";
     if (!formData.harga) newErrors.harga = "Harga harus diisi";
     if (!formData.kategori) newErrors.kategori = "Kategori harus dipilih";
@@ -70,8 +72,14 @@ const ProductForm = () => {
         if (error) {
           setMessage("Error adding data: " + error.message);
         } else {
-          setMessage("Data successfully added!");
+          Swal.fire({
+            title: 'Success!',
+            text: 'Data has been successfully added!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
           setFormData({
+            nama_pelanggan:"",
             nama_produk: "",
             harga: "",
             kategori: "",
@@ -95,7 +103,24 @@ const ProductForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} id="productForm">
+        
         <div className="form-grid">
+          <div className="mb-3">
+            <label htmlFor="pelangganName" className="form-label">
+              Nama Pelanggan
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="pelangganName"
+              name="nama_pelanggan"
+              placeholder="Masukkan nama pelanggan"
+              value={formData.nama_pelanggan}
+              onChange={handleInputChange}
+            />
+            {errors.nama_pelanggan && <span className="error-message">{errors.nama_pelanggan}</span>}
+          </div>
+          
           <div className="mb-3">
             <label htmlFor="productName" className="form-label">
               Nama Produk
