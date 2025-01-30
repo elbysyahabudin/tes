@@ -29,7 +29,8 @@ const provinces = [
 ];
 
 const kategoris = ["Kaos", "Celana", "Tas", "Baju", "Sepatu", "Jaket"];
-const kurirs = ["JNE", "SiCepat", "J&T", "Pos Indonesia", "Wahana", "TiKi", "Ninja Express", "Lala Move"];
+// const kurirs = ["JNE", "SiCepat", "J&T", "Pos Indonesia", "Wahana", "TiKi", "Ninja Express", "Lala Move"];
+const kurirs = ["JNE", "J&T Express", "SiCepat",  "TiKi", "Wahana"];
 const pembayarans = ["Transfer", "Ovo", "Dana", "Gopay", "Shopee Pay", "LinkAja"];
 
 const TabelProduk = () => {
@@ -70,7 +71,7 @@ const TabelProduk = () => {
       Object.keys(filters).forEach((filterId) => {
         const columnIndex = {
           "#dropdown-kategori": 4,
-          "#kurir-pengiriman": 5,
+          "#kurir-pengiriman": 7,
           "#metode-pembayaran": 6,
           "#province-filter": 9,
           "#date-filter": 10,

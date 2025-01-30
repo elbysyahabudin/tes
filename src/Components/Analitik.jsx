@@ -22,8 +22,8 @@ const provinces = [
 ];
 
 const kategoris = ["Celana", "Jaket", "Kaos", "Polo Shirt", "Tank Top"];
-const kurirs = ["JNE", "J&T", "SiCepat",  "TiKi", "Wahana"];
-const pembayarans = ["Cash", "Transfer Bank",  "Dana", "Gopay", "LinkAja", "Ovo","Shopee Pay", ];
+const kurirs = ["JNE", "J&T Express", "SiCepat",  "TiKi", "Wahana"];
+const pembayarans = ["Bayar di tempat", "Virtual account transfer",  "DANA", "Bound Gopay", "Credit Card/Debit Card", "PayLater", "Bound Ovo" ];
 
 const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
