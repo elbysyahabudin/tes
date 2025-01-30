@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 const supabaseUrl = "https://trqvushwhkvchkgqhmge.supabase.co"; // Replace with your Supabase URL
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRycXZ1c2h3aGt2Y2hrZ3FobWdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc5MDU1MjUsImV4cCI6MjA1MzQ4MTUyNX0.J-yggfqvHPQtP-Zk-bwOxTRqD64J6jgQ_DOLCCp-JxY"; // Replace with your Supabase API Key
 const supabase = createClient(supabaseUrl, supabaseKey);
+import * as XLSX from "xlsx";
 
 const provinces = [
   "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau",
@@ -21,6 +22,7 @@ const provinces = [
 ];
 
 const ProductForm = () => {
+  
   const [formData, setFormData] = useState({
     nama_pelanggan: "",
     nama_produk: "",
@@ -36,8 +38,12 @@ const ProductForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const [file, setFile] = useState(null);
+  const [excelData, setExcelData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -100,8 +106,104 @@ const ProductForm = () => {
     }
   };
 
+
+  const handleFileChange = (event) => {
+    if (event.target.files?.length) {
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+      readExcel(selectedFile);
+    }
+  };
+
+  // Read and Parse Excel File
+  const readExcel = (selectedFile) => {
+    const reader = new FileReader();
+    reader.readAsBinaryString(selectedFile);
+  
+    reader.onload = (event) => {
+      if (!event.target?.result) return;
+      const workbook = XLSX.read(event.target.result, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      
+      const jsonData = XLSX.utils.sheet_to_json(sheet);
+  
+      // Filter out the subtitle row (usually located at the second index)
+      const filteredData = jsonData.filter((row, index) => index > 0); // Skip subtitle row
+  
+      setExcelData(filteredData);
+    };
+  };
+
+  const kategoris = ["Kaos", "Celana", "Tas", "Baju", "Sepatu", "Jaket"];
+
+  const handleImport = async () => {
+    if (excelData.length === 0) {
+      alert("No data to import!");
+      return;
+    }
+
+    setLoading(true);
+
+    const formattedData = excelData.map((row) => {
+      const productName = row["Product Name"];
+      const firstSixWords = productName.split(" ").slice(0, 6).join(" ");
+    
+      let kategori = "Unknown";
+      for (let category of kategoris) {
+        if (firstSixWords.toLowerCase().includes(category.toLowerCase())) {
+          kategori = category;
+          break;
+        }
+      }
+    
+      return {
+        nama_produk: firstSixWords,
+        kuantitas: row["Quantity"],
+        harga: parseFloat(row["SKU Unit Original Price"].replace(/[^0-9]+/g, "")) || 0,
+        tanggal_pembelian: reformatDate(row["Created Time"]),
+        kurir: row["Shipping Provider Name"],
+        nama_pelanggan: row["Buyer Username"],
+        provinsi: row["Province"],
+        kota_pelanggan: row["Regency and City"],
+        metode_pembayaran: row["Payment Method"],
+        pengiriman: "Pengiriman kurir",
+        kategori: kategori,
+      };
+    });
+    
+    const { data, error } = await supabase.from("tabel_produk").insert(formattedData);
+  
+    if (error) {
+      console.error("Error inserting data:", error);
+      alert("Failed to insert data.");
+    } else {
+      alert("Data inserted successfully!");
+      console.log("Inserted Data:", data);
+    }
+    
+    setLoading(false);
+  };
+
+  const reformatDate = (dateString) => {
+    const dateParts = dateString.split(" ")[0];
+    const [day, month, year] = dateParts.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div>
+     <div className="import-content">
+        <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} className="mb-4" />
+        <button 
+          onClick={handleImport} 
+          disabled={!file || loading} 
+          className="btn btn-primary">
+          {loading ? "Importing..." : "Import to Database"}
+        </button>
+      </div>
+
+      <hr className="separator" />
       <form onSubmit={handleSubmit} id="productForm">
         
         <div className="form-grid">

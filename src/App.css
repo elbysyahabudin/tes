@@ -504,3 +504,27 @@ table tr td, table tr th{
 .social-icon:hover {
   color: #0077b5; /* Change this color as desired on hover */
 }
+
+.import-content {
+  display: flex;
+  align-items: center; /* Ensures vertical centering */
+  padding: 0;
+  margin: 0;
+  gap: 8px; /* Space between the input and button */
+}
+
+.import-content input[type="file"] {
+  margin: 0;
+  padding: 8px; /* Adjust as needed */
+  height: 38px; /* Set a fixed height for alignment */
+  margin-top: 20px;
+}
+
+.import-content button {
+  margin: 0;
+  padding: 8px 16px;
+  height: 38px; /* Set the same height as input for alignment */
+  display: flex;
+  align-items: center; /* Ensures the text is vertically centered inside the button */
+  margin-right: 100px;
+}

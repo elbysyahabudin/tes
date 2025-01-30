@@ -69,18 +69,15 @@ const TabelProduk = () => {
       // Apply filters to the table
       Object.keys(filters).forEach((filterId) => {
         const columnIndex = {
-          "#dropdown-kategori": 3,
-          "#kurir-pengiriman": 6,
-          "#metode-pembayaran": 5,
-          "#province-filter": 8,
-          "#date-filter": 9,
+          "#dropdown-kategori": 4,
+          "#kurir-pengiriman": 5,
+          "#metode-pembayaran": 6,
+          "#province-filter": 9,
+          "#date-filter": 10,
         }[filterId];
-    
-        // Adjust the filter to add wildcards like SQL's LIKE operator
-        const filterValue = "%" + filters[filterId] + "%"; // This simulates the LIKE '%value%' behavior
-        
-        // Apply the search with the modified filter value
-        table.column(columnIndex).search(filterValue, true, false).draw();
+  
+        table.column(columnIndex).search(filters[filterId]).draw();
+      
     });
     
   
