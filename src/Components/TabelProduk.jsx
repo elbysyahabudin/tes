@@ -75,9 +75,14 @@ const TabelProduk = () => {
           "#province-filter": 8,
           "#date-filter": 9,
         }[filterId];
-  
-        table.column(columnIndex).search(filters[filterId]).draw();
-      });
+    
+        // Adjust the filter to add wildcards like SQL's LIKE operator
+        const filterValue = "%" + filters[filterId] + "%"; // This simulates the LIKE '%value%' behavior
+        
+        // Apply the search with the modified filter value
+        table.column(columnIndex).search(filterValue, true, false).draw();
+    });
+    
   
       return () => {
         table.destroy();
